@@ -1,0 +1,134 @@
+(venv) matthieu@matthieu-HP-15-Notebook-PC:~/Documents/Master2_IMIS/Projet_Fin_Etude/TraceVariableNN$ python testWang_Donnees_Reel.py 
+2021-08-16 14:28:11.825250: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2021-08-16 14:28:11.825289: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+WARNING:tensorflow:From /home/matthieu/.local/lib/python3.8/site-packages/tensorflow/python/compat/v2_compat.py:96: disable_resource_variables (from tensorflow.python.ops.variable_scope) is deprecated and will be removed in a future version.
+Instructions for updating:
+non-resource variables are not supported in the long term
+TEST AVEC DONNES REEL
+Nombre d'exemple d'entrainement :  19476
+Nombre d'exemple de test :  1137
+/home/matthieu/.local/lib/python3.8/site-packages/tensorflow/python/keras/layers/legacy_rnn/rnn_cell_impl.py:535: UserWarning: `tf.nn.rnn_cell.GRUCell` is deprecated and will be removed in a future version. This class is equivalent as `tf.keras.layers.GRUCell`, and will be replaced by that in Tensorflow 2.0.
+  warnings.warn("`tf.nn.rnn_cell.GRUCell` is deprecated and will be removed "
+WARNING:tensorflow:`tf.nn.rnn_cell.MultiRNNCell` is deprecated. This class is equivalent as `tf.keras.layers.StackedRNNCells`, and will be replaced by that in Tensorflow 2.0.
+WARNING:tensorflow:At least two cells provided to MultiRNNCell are the same object and will share weights.
+WARNING:tensorflow:From /home/matthieu/Documents/Master2_IMIS/Projet_Fin_Etude/TraceVariableNN/Training.py:67: dynamic_rnn (from tensorflow.python.ops.rnn) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use `keras.layers.RNN(cell)`, which is equivalent to this API
+/home/matthieu/.local/lib/python3.8/site-packages/tensorflow/python/keras/engine/base_layer_v1.py:1700: UserWarning: `layer.add_variable` is deprecated and will be removed in a future version. Please use `layer.add_weight` method instead.
+  warnings.warn('`layer.add_variable` is deprecated and '
+WARNING:tensorflow:From /home/matthieu/.local/lib/python3.8/site-packages/tensorflow/python/keras/layers/legacy_rnn/rnn_cell_impl.py:583: calling Constant.__init__ (from tensorflow.python.ops.init_ops) with dtype is deprecated and will be removed in a future version.
+Instructions for updating:
+Call initializer instance with the dtype argument instead of passing it to the constructor
+WARNING:tensorflow:From /home/matthieu/.local/lib/python3.8/site-packages/tensorflow/python/keras/layers/legacy_rnn/rnn_cell_impl.py:593: calling Zeros.__init__ (from tensorflow.python.ops.init_ops) with dtype is deprecated and will be removed in a future version.
+Instructions for updating:
+Call initializer instance with the dtype argument instead of passing it to the constructor
+Tensor("Placeholder_2:0", shape=(1,), dtype=int32)
+Tensor("Cast:0", shape=(1,), dtype=int32)
+2021-08-16 14:28:23.017563: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2021-08-16 14:28:23.017597: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-08-16 14:28:23.017639: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (matthieu-HP-15-Notebook-PC): /proc/driver/nvidia/version does not exist
+2021-08-16 14:28:23.017881: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-08-16 14:28:23.054858: I tensorflow/core/platform/profile_utils/cpu_utils.cc:114] CPU Frequency: 2394495000 Hz
+training iteration is 0 and total_loss: 1.1920928e-07 
+training iteration is 1 and total_loss: 0.0 
+training iteration is 2 and total_loss: 0.0 
+training iteration is 3 and total_loss: 0.0 
+training iteration is 4 and total_loss: 0.0 
+training iteration is 5 and total_loss: 0.0 
+training iteration is 6 and total_loss: 0.0 
+training iteration is 7 and total_loss: 0.0 
+training iteration is 8 and total_loss: 0.0 
+training iteration is 9 and total_loss: 0.0 
+training iteration is 10 and total_loss: 0.0 
+training iteration is 11 and total_loss: 0.0 
+training iteration is 12 and total_loss: 0.0 
+training iteration is 13 and total_loss: 0.0 
+training iteration is 14 and total_loss: 0.0 
+training iteration is 15 and total_loss: 0.0 
+training iteration is 16 and total_loss: 0.0 
+training iteration is 17 and total_loss: 0.0 
+training iteration is 18 and total_loss: 0.0 
+training iteration is 19 and total_loss: 0.0 
+training iteration is 20 and total_loss: 0.0 
+training iteration is 21 and total_loss: 0.0 
+training iteration is 22 and total_loss: 0.0 
+training iteration is 23 and total_loss: 0.0 
+training iteration is 24 and total_loss: 0.0 
+training iteration is 25 and total_loss: 0.0 
+training iteration is 26 and total_loss: 0.0 
+training iteration is 27 and total_loss: 0.0 
+training iteration is 28 and total_loss: 0.0 
+training iteration is 29 and total_loss: 0.0 
+training iteration is 30 and total_loss: 0.0 
+training iteration is 31 and total_loss: 0.0 
+training iteration is 32 and total_loss: 0.0 
+training iteration is 33 and total_loss: 0.0 
+training iteration is 34 and total_loss: 0.0 
+training iteration is 35 and total_loss: 0.0 
+training iteration is 36 and total_loss: 0.0 
+training iteration is 37 and total_loss: 0.0 
+training iteration is 38 and total_loss: 0.0 
+training iteration is 39 and total_loss: 0.0 
+training iteration is 40 and total_loss: 0.0 
+training iteration is 41 and total_loss: 0.0 
+training iteration is 42 and total_loss: 0.0 
+training iteration is 43 and total_loss: 0.0 
+training iteration is 44 and total_loss: 0.0 
+training iteration is 45 and total_loss: 0.0 
+training iteration is 46 and total_loss: 0.0 
+training iteration is 47 and total_loss: 0.0 
+training iteration is 48 and total_loss: 0.0 
+training iteration is 49 and total_loss: 0.0 
+training iteration is 50 and total_loss: 0.0 
+training iteration is 51 and total_loss: 0.0 
+training iteration is 52 and total_loss: 0.0 
+training iteration is 53 and total_loss: 0.0 
+training iteration is 54 and total_loss: 0.0 
+training iteration is 55 and total_loss: 0.0 
+training iteration is 56 and total_loss: 0.0 
+training iteration is 57 and total_loss: 0.0 
+training iteration is 58 and total_loss: 0.0 
+training iteration is 59 and total_loss: 0.0 
+training iteration is 60 and total_loss: 0.0 
+training iteration is 61 and total_loss: 0.0 
+training iteration is 62 and total_loss: 0.0 
+training iteration is 63 and total_loss: 0.0 
+training iteration is 64 and total_loss: 0.0 
+training iteration is 65 and total_loss: 0.0 
+training iteration is 66 and total_loss: 0.0 
+training iteration is 67 and total_loss: 0.0 
+training iteration is 68 and total_loss: 0.0 
+training iteration is 69 and total_loss: 0.0 
+training iteration is 70 and total_loss: 0.0 
+training iteration is 71 and total_loss: 0.0 
+training iteration is 72 and total_loss: 0.0 
+training iteration is 73 and total_loss: 0.0 
+training iteration is 74 and total_loss: 0.0 
+training iteration is 75 and total_loss: 0.0 
+training iteration is 76 and total_loss: 0.0 
+training iteration is 77 and total_loss: 0.0 
+training iteration is 78 and total_loss: 0.0 
+training iteration is 79 and total_loss: 0.0 
+training iteration is 80 and total_loss: 0.0 
+training iteration is 81 and total_loss: 0.0 
+training iteration is 82 and total_loss: 0.0 
+training iteration is 83 and total_loss: 0.0 
+training iteration is 84 and total_loss: 0.0 
+training iteration is 85 and total_loss: 0.0 
+training iteration is 86 and total_loss: 0.0 
+training iteration is 87 and total_loss: 0.0 
+training iteration is 88 and total_loss: 0.0 
+training iteration is 89 and total_loss: 0.0 
+training iteration is 90 and total_loss: 0.0 
+training iteration is 91 and total_loss: 0.0 
+training iteration is 92 and total_loss: 0.0 
+training iteration is 93 and total_loss: 0.0 
+training iteration is 94 and total_loss: 0.0 
+training iteration is 95 and total_loss: 0.0 
+training iteration is 96 and total_loss: 0.0 
+training iteration is 97 and total_loss: 0.0 
+training iteration is 98 and total_loss: 0.0 
+training iteration is 99 and total_loss: 0.0 
+The accuracy is 1.0
+

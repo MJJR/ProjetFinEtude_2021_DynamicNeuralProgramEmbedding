@@ -117,30 +117,28 @@ class TraceVocabulary():
     PostTraitement : Padding [taille_max_pas_exe]*[taille_max_nb_variable]
     """
     def post_traitement_traces(self,toutes_les_traces_ohe):
-        entrees_finaux = []
         print("======= POST TRAITEMENT =======")
         avancement = 0
         taille_a_traiter = len(toutes_les_traces_ohe)
         for traces_une_execution in toutes_les_traces_ohe:
             #print(traces_une_execution["traces_ohe"])
-            mes_traces = []
-            for traces_une_variable in traces_une_execution["traces_ohe"]:
-                aux = traces_une_variable.copy()
-                aux.extend([0]*(self.taille_max_pas_exe-len(traces_une_variable)))
-                mes_traces.append(aux)
+            mes_traces = traces_une_execution["traces_ohe"].copy()
             nb_variable_restant = self.taille_max_nb_variable - len(traces_une_execution["traces_ohe"])
             while nb_variable_restant > 0:
-                mes_traces.append([0]*self.taille_max_pas_exe)
+                mes_traces.append([0]*traces_une_execution["longueur_traces"])
                 nb_variable_restant -= 1
             avancement += 1
-            print("Traitement en cours : ", (avancement/taille_a_traiter)*100,"%")
+            print("Traitement en cours : ", (avancement/taille_a_traiter)*100,"% (",avancement,"/",taille_a_traiter,")")
 
             traces_une_execution["traces_ohe"] = mes_traces
 
+            print(traces_une_execution["traces_ohe"])
+            print("longueur traces = ",len(traces_une_execution["traces_ohe"]))
+            print("les traces ont longueur 32 taille_max ? -> ", self.taille_max_nb_variable == len(traces_une_execution["traces_ohe"]))
 
         return toutes_les_traces_ohe
 
-#   toutes_les_traces_ohe[traces_ohe]
+
 
     """
     utiliser_vocabulary_dict

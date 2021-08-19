@@ -46,7 +46,7 @@ def ajouter_metadonnee(programme,nb_code,number_cas_test,traces_brutes,mon_vocab
 
 def traduire_objet_en_json(metadonnees):
     for liste_traces in metadonnees:
-        print("trace numéro : ",liste_traces["nb_code"])
+        #print("trace numéro : ",liste_traces["nb_code"])
         for traces_programme in liste_traces["traces_brutes"]:
             for cle,traces_du_pas in traces_programme.items():
                 #print(traces_du_pas)

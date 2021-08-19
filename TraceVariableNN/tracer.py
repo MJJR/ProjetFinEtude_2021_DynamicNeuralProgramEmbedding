@@ -19,8 +19,8 @@ class Tracer(object):
     # call, line, return, exception, opcode
     self.dico_event = {"call":True, "line":True, "return":False, "exception":False, "opcode":False}
 
-  def __del__(self):
-      print("tracer deleted")
+  #def __del__(self):
+      #print("tracer deleted")
 
   def tracer(self, frame, event, arg = None):
     """
@@ -64,7 +64,7 @@ class Tracer(object):
         return(trace, vartrace, "Boucle infinie")
 
     except IndexError as e :
-        print("IndexError sur le programme numéro ",nb_programme)
+        print("IndexError détecté ")
         trace = self.lines_trace
         vartrace = self.var_traces
         self.lines_trace = []
@@ -73,7 +73,7 @@ class Tracer(object):
         return(trace, vartrace, "IndexError")
 
     except UnboundLocalError as e :
-        print("UnboundLocalError sur le programme numéro ",nb_programme)
+        print("UnboundLocalError détecté ")
         trace = self.lines_trace
         vartrace = self.var_traces
         self.lines_trace = []
@@ -82,7 +82,7 @@ class Tracer(object):
         return(trace, vartrace, "UnboundLocalError")
 
     except AttributeError as e :
-        print("AttributeError sur le programme numéro ",nb_programme)
+        print("AttributeError détecté ")
         trace = self.lines_trace
         vartrace = self.var_traces
         self.lines_trace = []
@@ -90,7 +90,7 @@ class Tracer(object):
         sys.settrace(None)
         return(trace, vartrace, "AttributeError")
     except ZeroDivisionError as e :
-        print("ZeroDivisionError sur le programme numéro ",nb_programme)
+        print("ZeroDivisionError détecté ")
         trace = self.lines_trace
         vartrace = self.var_traces
         self.lines_trace = []
@@ -98,7 +98,7 @@ class Tracer(object):
         sys.settrace(None)
         return(trace, vartrace, "ZeroDivisionError")
     except AssertionError as e :
-        print("AssertionError sur le programme numéro ",nb_programme)
+        print("AssertionError détecté ")
         trace = self.lines_trace
         vartrace = self.var_traces
         self.lines_trace = []
@@ -106,13 +106,21 @@ class Tracer(object):
         sys.settrace(None)
         return(trace, vartrace, "AssertionError")
     except TypeError as e :
-        print("TypeError sur le programme numéro ",nb_programme)
+        print("TypeError détecté ")
         trace = self.lines_trace
         vartrace = self.var_traces
         self.lines_trace = []
         self.var_traces = []
         sys.settrace(None)
-        return(trace, vartrace, "TypeError")    
+        return(trace, vartrace, "TypeError")
+    except NameError as e :
+        print("NameError détecté ")
+        trace = self.lines_trace
+        vartrace = self.var_traces
+        self.lines_trace = []
+        self.var_traces = []
+        sys.settrace(None)
+        return(trace, vartrace, "NameError")
 
 
 

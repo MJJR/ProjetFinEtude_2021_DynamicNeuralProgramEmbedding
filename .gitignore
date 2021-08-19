@@ -1,0 +1,3 @@
+# Ignorer les fichier .pyc et .json
+*.pyc
+*.json

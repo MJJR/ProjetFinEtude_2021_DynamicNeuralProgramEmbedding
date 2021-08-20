@@ -105,6 +105,7 @@ class Tracer(object):
         self.var_traces = []
         sys.settrace(None)
         return(trace, vartrace, "AssertionError")
+
     except TypeError as e :
         print("TypeError détecté ")
         trace = self.lines_trace
@@ -113,6 +114,7 @@ class Tracer(object):
         self.var_traces = []
         sys.settrace(None)
         return(trace, vartrace, "TypeError")
+
     except NameError as e :
         print("NameError détecté ")
         trace = self.lines_trace

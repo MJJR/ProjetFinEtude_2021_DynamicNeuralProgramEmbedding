@@ -132,9 +132,9 @@ class TraceVocabulary():
 
             traces_une_execution["traces_ohe"] = mes_traces
 
-            print(traces_une_execution["traces_ohe"])
-            print("longueur traces = ",len(traces_une_execution["traces_ohe"]))
-            print("les traces ont longueur 32 taille_max ? -> ", self.taille_max_nb_variable == len(traces_une_execution["traces_ohe"]))
+            #print(traces_une_execution["traces_ohe"])
+            #print("longueur traces = ",len(traces_une_execution["traces_ohe"]))
+            #print("les traces ont longueur 32 taille_max ? -> ", self.taille_max_nb_variable == len(traces_une_execution["traces_ohe"]))
 
         return toutes_les_traces_ohe
 

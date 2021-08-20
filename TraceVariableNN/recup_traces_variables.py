@@ -50,7 +50,7 @@ for programme in liste_code_eleves_partie_un + liste_code_eleves_partie_deux :
     test_dico.add(programme["exercise_name"])
 
     try:
-        #print("Programme numéro : ",nb_programme)
+        print("Programme numéro : ",nb_programme)
         '''
         SI LE PROGRAMME EST INVALIDE AU NIVEAU DE LA SYNTAXE
         ALORS ON L'IGNORE AVEC UNE EXCEPTION
@@ -69,59 +69,68 @@ for programme in liste_code_eleves_partie_un + liste_code_eleves_partie_deux :
         cas_test = cu.grab_entries_fonction(liste_code_solutions,nom_fonction)
         nb_cas_test=0
         for test in cas_test:
-            if cu.is_black_listed(programme,nb_cas_test) :
-                print("QUEL HORREUR !!!")
-                #print(programme["upload"])
-                test_nb_pass+=1
-            else:
-                #print(programme["upload"])
-                traceur = tracer.Tracer()
-                #print(test)
-                #print("numéro du cas de test = ", nb_cas_test)
-                """
-                /!\ Les entrées sont soit directement dans une liste, soit dans un dictionnaire de type {"__tuple__":xxx,"items":xxx}
-                """
-                if isinstance(test,dict):
-                    #print('*test["items"] = ', *test["items"])
-                    les_traces = traceur.get_trace_and_result(la_fonction,*test["items"])
-                else :
-                    #print("test = ",test)
-                    #print("TYPE DE TEST : ",type(test))
-                    les_traces = traceur.get_trace_and_result(la_fonction,test)
-                #print(les_traces[1])
-                del traceur
+            try :
 
-                #RÉCUPÉRER LES TRACES ET L'ÉCRIRE DANS LE FICHIER JSON PRÉVU À CET EFFET
-                if les_traces[1] != []:
-                    liste_traces.append(ju.ajouter_metadonnee(programme,nb_programme,nb_cas_test,les_traces[1],trace_vocab))
-                else :
-                    print("WARNING il y a une liste vide !!!")
-                    print(programme["upload"])
+                if cu.is_black_listed(programme,nb_cas_test) :
+                    print("QUEL HORREUR !!!")
+                    #print(programme["upload"])
                     test_nb_pass+=1
-            nb_cas_test += 1
+                else:
+                    #print(programme["upload"])
+                    traceur = tracer.Tracer()
+                    #print(test)
+                    #print("numéro du cas de test = ", nb_cas_test)
+                    """
+                    /!\ Les entrées sont soit directement dans une liste, soit dans un dictionnaire de type {"__tuple__":xxx,"items":xxx}
+                    """
+                    if isinstance(test,dict):
+                        #print('*test["items"] = ', *test["items"])
+                        les_traces = traceur.get_trace_and_result(la_fonction,*test["items"])
+                    else :
+                        #print("test = ",test)
+                        #print("TYPE DE TEST : ",type(test))
+                        les_traces = traceur.get_trace_and_result(la_fonction,test)
+                    #print(les_traces[1])
+                    del traceur
 
+                    #RÉCUPÉRER LES TRACES ET L'ÉCRIRE DANS LE FICHIER JSON PRÉVU À CET EFFET
+                    if les_traces[1] != []:
+                        liste_traces.append(ju.ajouter_metadonnee(programme,nb_programme,nb_cas_test,les_traces[1],trace_vocab))
+                    else :
+                        print("WARNING il y a une liste vide !!!")
+                        print("Programme ID : ",programme["exercise_name"])
+                        print(programme["upload"])
+                        print("numéro du cas de test = ", nb_cas_test)
+                        print("test = ",test)
+                        test_nb_pass+=1
+                nb_cas_test += 1
 
+            except tracer.BoucleInfinie :
+                print("BoucleInfinie sur le programme numéro ",nb_programme)
+                #Pas de suppession du traceur, il n'est pas encore instancié dans ce cas de figure !
+                test_nb_pass+=1
+            except ValueError :
+                print("ValueError sur le programme numéro ",nb_programme)
+                del traceur
+                test_nb_pass+=1
+
+    #ERREUR DE SYNTAX SUR LE CODE => INUTILISABLE
     except SyntaxError :
         print("SyntaxError sur le programme numéro ",nb_programme)
         #l'instruction 'del traceur' mets une erreur comme quoi il n'est pas instancié
-        test_nb_pass+=1
     #except NameError :
         #print("NameError sur le programme numéro ",nb_programme)
         #del traceur
-        #test_nb_pass+=1
-    except ValueError :
-        print("ValueError sur le programme numéro ",nb_programme)
-        del traceur
-        test_nb_pass+=1
+    #except ValueError :
+        #print("ValueError sur le programme numéro ",nb_programme)
+        #del traceur
     #except TypeError :
         #print("TypeError sur le programme numéro ",nb_programme)
         #del traceur
-        #test_nb_pass+=1
-    except tracer.BoucleInfinie :
-        print("BoucleInfinie sur le programme numéro ",nb_programme)
+    #except tracer.BoucleInfinie :
+        #print("BoucleInfinie sur le programme numéro ",nb_programme)
         #Pas de suppession du traceur, il n'est pas encore instancié dans ce cas de figure !
-        test_nb_pass+=1
-    print("Programme n°",nb_programme," OK")
+    #print("Programme n°",nb_programme," OK")
     nb_programme +=1
 
 #RÉCUPÉRER LES TRACES ET L'ÉCRIRE DANS LE FICHIER JSON PRÉVU À CET EFFET

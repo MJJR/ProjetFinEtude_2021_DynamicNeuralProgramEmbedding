@@ -44,6 +44,25 @@ def ajouter_metadonnee(programme,nb_code,number_cas_test,traces_brutes,mon_vocab
     res["traces_ohe"],res["longueur_traces"] = mon_vocabulaire.traitement_traces_brutes(traces_brutes)
     return res
 
+"""
+POUR LA DEUXIÈME EXPÉRIENCE
+Ajout de traces de variable plus son traitement dans la variable metadonnees
+"""
+def ajouter_metadonnee_exp2(programme,nb_code,number_cas_test,traces_brutes,mon_vocabulaire,for_training) :
+    res = {}
+    res["user"]= programme["user"]
+    res["exo_name"]= programme["exercise_name"]
+    res["nb_code"]= nb_code
+    res["number_cas_test"]= number_cas_test
+    if for_training :
+        res["eval_set"]= "training"
+    else:
+        res["eval_set"]= "test"
+    res["date"]= programme["date"]
+    res["label"]=mon_vocabulaire.verif_label(programme["exercise_name"])
+    res["traces_ohe"],res["longueur_traces"] = mon_vocabulaire.traitement_traces_brutes(traces_brutes)
+    return res
+
 def traduire_objet_en_json(metadonnees):
     for liste_traces in metadonnees:
         #print("trace numéro : ",liste_traces["nb_code"])

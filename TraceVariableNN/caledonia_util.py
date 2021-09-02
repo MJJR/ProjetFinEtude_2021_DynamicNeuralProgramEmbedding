@@ -27,21 +27,34 @@ def grab_funcname_with_exercice_name(liste_code_solutions,exercise_name):
     return res
 
 '''
+On retourne les entrées des fonctions
+    en cherchant avec l'exercise_name (lidentifiant de l'exercice)
 '''
-def grab_entries_fonction(liste_code_solutions,funcname):
+def grab_entries_fonction(liste_code_solutions,exercise_name):
     res = None
     for solution in liste_code_solutions:
-        if solution["funcname"] == funcname :
+        if solution["exo_name"] == exercise_name :
             res = solution["entries"]
+    return res
+
+'''
+On retourne les entrées de test de l'expérimentation 2 des fonctions
+    en cherchant avec l'exercise_name
+'''
+def grab_entries_fonction_exp2(liste_code_solutions,exercise_name):
+    res = None
+    for solution in liste_code_solutions:
+        if solution["exo_name"] == exercise_name :
+            res = solution["entries_exp2"]
     return res
 
 
 def is_black_listed(programme,nb_cas_test):
     res = False
-    if programme["user"] == "userdId_38" and programme["exercise_name"] == "d7c83a7fb9b49e28804e55955ad06968" and nb_cas_test == 3 :
+    if programme["user"] == "userdId_38" and programme["exercise_name"] == "d7c83a7fb9b49e28804e55955ad06968" and nb_cas_test in [3,7] :
         res = True
-    elif programme["user"] == "userdId_21" and programme["exercise_name"] == "3355182ef981952e841618c19103ef09" and nb_cas_test in [0,1,2,3,4,5] :
+    elif programme["user"] == "userdId_21" and programme["exercise_name"] == "3355182ef981952e841618c19103ef09" and nb_cas_test in [0,1,2,3,4,5,6,7] :
         res = True
-    elif programme["user"] == "userdId_15" and programme["exercise_name"] == "864911b08708fc8bae69311a8ddd3da7" and nb_cas_test in [0,1,2,3,4,5,6] :
+    elif programme["user"] == "userdId_15" and programme["exercise_name"] == "864911b08708fc8bae69311a8ddd3da7" and nb_cas_test in [0,1,2,3,4,5,6,7,8] :
         res = True
     return res

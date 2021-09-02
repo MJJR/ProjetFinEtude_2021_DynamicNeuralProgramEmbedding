@@ -14,7 +14,7 @@ learning_rate = 0.0001
 n_hidden = 200
 
 
-vocabulary_size = 8430 # To be changed: input vocabulary
+vocabulary_size = 11553 # To be changed: input vocabulary
 CLASSES = 66 # To be changed: prediction classes
 batch_size = 32 # To be changed
 program_number = 1 # To be changed: number of programs

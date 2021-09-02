@@ -3,6 +3,7 @@ Created on August 14 2021
 
 @author: Mathieu REDOR
 '''
+
 import json
 import caledonia_util as cu
 import json_util as ju
@@ -20,14 +21,14 @@ trace_vocab = vu.TraceVocabulary()
 
 #On ouvre les fichiers json
 code_eleves = open('NewCaledonia_5690.json',"r")
-code_solutions = open('NewCaledonia_exercises.json',"r")
+code_solutions = open('NewCaledonia_exercises_exp2.json',"r")
 
 #On les charges dans ces variables
 liste_code_eleves = json.load(code_eleves)
 liste_code_solutions = json.load(code_solutions)
 
 #On ouvre notre fichier pour écrire les traces brutes + metadonnées
-metadonnees = open('TracesVariable.json',"w")
+metadonnees = open('TracesVariable_exp2.json',"w")
 
 #Variables pour le traceur et les traces de variables
 traceur = None
@@ -65,19 +66,22 @@ for programme in liste_code_eleves :
         #TEST POUR EXECUTER SUR CAS DE TEST
         #Attraper les entrées de la fonction et executer
         cas_test = cu.grab_entries_fonction(liste_code_solutions,programme["exercise_name"])
+        cas_test_exp2 = cu.grab_entries_fonction_exp2(liste_code_solutions,programme["exercise_name"])
         nb_cas_test=0
-        for test in cas_test:
+        #On mettra tous les executions des codes avec les cas de test d'origine en training, et le reste en test
+        nb_cas_test_training = len(cas_test)
+        for test in cas_test+cas_test_exp2:
             try :
 
                 if cu.is_black_listed(programme,nb_cas_test) :
                     print("QUEL HORREUR !!!")
-                    #print(programme["upload"])
+                    print(programme["user"])
                     test_nb_pass+=1
                 else:
                     #print(programme["upload"])
                     traceur = tracer.Tracer()
                     #print(test)
-                    #print("numéro du cas de test = ", nb_cas_test)
+                    print("numéro du cas de test = ", nb_cas_test)
                     """
                     /!\ Les entrées sont soit directement dans une liste, soit dans un dictionnaire de type {"__tuple__":xxx,"items":xxx}
                     """
@@ -93,7 +97,7 @@ for programme in liste_code_eleves :
 
                     #RÉCUPÉRER LES TRACES ET L'ÉCRIRE DANS LE FICHIER JSON PRÉVU À CET EFFET
                     if les_traces[1] != []:
-                        liste_traces.append(ju.ajouter_metadonnee(programme,nb_programme,nb_cas_test,les_traces[1],trace_vocab))
+                        liste_traces.append(ju.ajouter_metadonnee_exp2(programme,nb_programme,nb_cas_test,les_traces[1],trace_vocab,nb_cas_test<nb_cas_test_training))
                     else :
                         print("WARNING il y a une liste vide !!!")
                         print("Programme ID : ",programme["exercise_name"])
@@ -125,8 +129,8 @@ for programme in liste_code_eleves :
     #except TypeError :
         #print("TypeError sur le programme numéro ",nb_programme)
         #del traceur
-    #except tracer.BoucleInfinie :
-        #print("BoucleInfinie sur le programme numéro ",nb_programme)
+    except tracer.BoucleInfinie :
+        print("BoucleInfinie sur le programme numéro ",nb_programme)
         #Pas de suppession du traceur, il n'est pas encore instancié dans ce cas de figure !
     #print("Programme n°",nb_programme," OK")
     nb_programme +=1

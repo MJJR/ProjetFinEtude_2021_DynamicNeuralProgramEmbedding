@@ -20,7 +20,7 @@ test_nb_pass = 0
 trace_vocab = vu.TraceVocabulary()
 
 #On ouvre les fichiers json
-code_eleves = open('NewCaledonia_5690.json',"r")
+code_eleves = open('NewCaledonia_1014.json',"r")
 code_solutions = open('NewCaledonia_exercises_exp2.json',"r")
 
 #On les charges dans ces variables
@@ -28,7 +28,7 @@ liste_code_eleves = json.load(code_eleves)
 liste_code_solutions = json.load(code_solutions)
 
 #On ouvre notre fichier pour écrire les traces brutes + metadonnées
-metadonnees = open('TracesVariable_exp2.json',"w")
+metadonnees = open('TracesVariable_exp2_1014.json',"w")
 
 #Variables pour le traceur et les traces de variables
 traceur = None

@@ -2,6 +2,8 @@
 Created on Aug 11, 2017
 @author: wangke
 '''
+from datetime import datetime
+
 # from tensorflow import rnn
 # import tensorflow as tf
 import tensorflow.compat.v1 as tf
@@ -9,14 +11,14 @@ tf.disable_v2_behavior()
 
 from tensorflow.compat.v1.nn import rnn_cell as rnn
 
-num_epochs = 1
+num_epochs = 5
 learning_rate = 0.0001
 n_hidden = 200
 
 
-vocabulary_size = 11553 # To be changed: input vocabulary
-CLASSES = 66 # To be changed: prediction classes
-batch_size = 32 # To be changed
+vocabulary_size = 795 # To be changed: input vocabulary
+CLASSES = 8 # To be changed: prediction classes
+batch_size = 9 # To be changed
 program_number = 1 # To be changed: number of programs
 
 class Training:
@@ -103,15 +105,18 @@ class Training:
             init = tf.global_variables_initializer()
             sess.run(init)
 
+            list_accuracy = []
             for i in range(num_epochs):
+
+                print(datetime.now()," : Start iteration number ",i)
 
                 # Demo purpose only for one batch add a for loop to read multiple batches
                 '''
                 AJOUT D'UNE BOUCLE FOR POUR TRAITER PLUSIEURS LOTS
                 '''
-
-                for lot in range( len(self.all_program_symbol_traces) ) :
-
+                nb_lot = len(self.all_program_symbol_traces)
+                for lot in range( nb_lot ) :
+                    print(datetime.now()," : in iteration number ",i," training with lot number ",lot," ( ",lot*100/nb_lot,"% )")
                     _,_loss = sess.run(
 
                         [train_step, loss],
@@ -122,18 +127,30 @@ class Training:
                             seq_lengths : self.trace_lengths[lot],
                         })
 
-                print("training iteration is %s and total_loss: %s "%(i,_loss))
+                print(datetime.now()," : training iteration is %s and total_loss: %s "%(i,_loss))
 
+                total_accuracy = 0
+                nb_test = 0
+                nb_lot = len(self.test_all_program_symbol_traces)
+                for lot in range( nb_lot ) :
+                    _accuracy = sess.run(
 
-            for lot in range( len(self.test_all_program_symbol_traces) ) :
-                _accuracy = sess.run(
+                        accuracy,
 
-                    accuracy,
+                        feed_dict={
+                                x : self.test_all_program_symbol_traces[lot],
+                                y : self.test_labels[lot],
+                                seq_lengths : self.test_trace_lengths[lot],
+                            })
+                    nb_test += 1
+                    print(datetime.now(),"The accuracy for test number ",nb_test," is ",_accuracy," ( Test process : ",lot*100/nb_lot," % ) ")
+                    total_accuracy += _accuracy
 
-                    feed_dict={
-                            x : self.test_all_program_symbol_traces[lot],
-                            y : self.test_labels[lot],
-                            seq_lengths : self.test_trace_lengths[lot],
-                        })
+                total_accuracy = total_accuracy*100/nb_test
+                list_accuracy.append(total_accuracy)
+                print("The total accuracy is ",total_accuracy," %")
 
-            print("The accuracy is %s"%(_accuracy))
+            print(datetime.now(), " : All iteration over !")
+            print("Accuracy per iteration :")
+            for acc in range(len(list_accuracy)):
+                print("Accuracy in iteration number ",acc," is ",list_accuracy[acc]," %")

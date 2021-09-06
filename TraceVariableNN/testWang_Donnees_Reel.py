@@ -29,6 +29,10 @@ test_pst = [] #Donnees des variables
 test_tl = [] #tl pour Trace Length
 test_label = [] #Une étiquette par programme
 
+test2_pst = [] #Donnees des variables
+test2_tl = [] #tl pour Trace Length
+test2_label = [] #Une étiquette par programme
+
 
 
 print("Triage entre donnée d'entrainement et donnée de test")
@@ -45,11 +49,16 @@ for donnee in donnees :
         test_pst.append(donnee["traces_ohe"])
         test_tl.append([donnee["longueur_traces"]]*nb_variable)
         test_label.append([donnee["label"]])
+    else :
+        test2_pst.append(donnee["traces_ohe"])
+        test2_tl.append([donnee["longueur_traces"]]*nb_variable)
+        test2_label.append([donnee["label"]])
 print("Triage terminé")
 print("Nombre d'exemple d'entrainement : ",len(training_pst))
 print("Nombre d'exemple de test : ",len(test_pst))
+print("Nombre d'exemple de test2 : ",len(test2_pst))
 
 
 print("Lancement du réseau de neurone :")
-net = network.Training(training_pst,training_tl,training_label,test_pst,test_tl,test_label)
+net = network.Training(training_pst,training_tl,training_label,test_pst,test_tl,test_label,  test2_all_program_symbol_traces=test2_pst, test2_trace_lengths=test2_tl, test2_labels=test2_label)
 res = net.train_evaluate()

@@ -19,7 +19,7 @@ test_nb_pass = 0
 trace_vocab = vu.TraceVocabulary()
 
 #On ouvre les fichiers json
-code_eleves = open('NewCaledonia_1014.json',"r")
+code_eleves = open('NewCaledonia_5690.json',"r")
 code_solutions = open('NewCaledonia_exercises.json',"r")
 
 #On les charges dans ces variables
@@ -27,7 +27,7 @@ liste_code_eleves = json.load(code_eleves)
 liste_code_solutions = json.load(code_solutions)
 
 #On ouvre notre fichier pour écrire les traces brutes + metadonnées
-metadonnees = open('TracesVariable_1014.json',"w")
+metadonnees = open('TracesVariable_5690.json',"w")
 
 #Variables pour le traceur et les traces de variables
 traceur = None
@@ -107,28 +107,11 @@ for programme in liste_code_eleves :
                 print("BoucleInfinie sur le programme numéro ",nb_programme)
                 #Pas de suppession du traceur, il n'est pas encore instancié dans ce cas de figure !
                 test_nb_pass+=1
-            except ValueError :
-                print("ValueError sur le programme numéro ",nb_programme)
-                del traceur
-                test_nb_pass+=1
 
     #ERREUR DE SYNTAX SUR LE CODE => INUTILISABLE
     except SyntaxError :
         print("SyntaxError sur le programme numéro ",nb_programme)
         #l'instruction 'del traceur' mets une erreur comme quoi il n'est pas instancié
-    #except NameError :
-        #print("NameError sur le programme numéro ",nb_programme)
-        #del traceur
-    #except ValueError :
-        #print("ValueError sur le programme numéro ",nb_programme)
-        #del traceur
-    #except TypeError :
-        #print("TypeError sur le programme numéro ",nb_programme)
-        #del traceur
-    #except tracer.BoucleInfinie :
-        #print("BoucleInfinie sur le programme numéro ",nb_programme)
-        #Pas de suppession du traceur, il n'est pas encore instancié dans ce cas de figure !
-    #print("Programme n°",nb_programme," OK")
     nb_programme +=1
 
 #RÉCUPÉRER LES TRACES ET L'ÉCRIRE DANS LE FICHIER JSON PRÉVU À CET EFFET

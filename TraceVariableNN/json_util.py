@@ -48,16 +48,16 @@ def ajouter_metadonnee(programme,nb_code,number_cas_test,traces_brutes,mon_vocab
 POUR LA DEUXIÈME EXPÉRIENCE
 Ajout de traces de variable plus son traitement dans la variable metadonnees
 """
-def ajouter_metadonnee_exp2(programme,nb_code,number_cas_test,traces_brutes,mon_vocabulaire,for_training) :
+def ajouter_metadonnee_exp2(programme,nb_code,number_cas_test,traces_brutes,mon_vocabulaire,is_exp1) :
     res = {}
     res["user"]= programme["user"]
     res["exo_name"]= programme["exercise_name"]
     res["nb_code"]= nb_code
     res["number_cas_test"]= number_cas_test
-    if for_training :
-        res["eval_set"]= "training"
+    if is_exp1 :
+        res["eval_set"]= programme["eval_set"]
     else:
-        res["eval_set"]= "test"
+        res["eval_set"]= "test_exp2"
     res["date"]= programme["date"]
     res["label"]=mon_vocabulaire.verif_label(programme["exercise_name"])
     res["traces_ohe"],res["longueur_traces"] = mon_vocabulaire.traitement_traces_brutes(traces_brutes)

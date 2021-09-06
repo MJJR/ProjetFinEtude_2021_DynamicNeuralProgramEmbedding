@@ -56,6 +56,7 @@ class Tracer(object):
         res = fonction(*args)
 
     except BoucleInfinie as e:
+        print("Boucle infinie détecté ")
         trace = self.lines_trace
         vartrace = self.var_traces
         self.lines_trace = []
@@ -123,6 +124,15 @@ class Tracer(object):
         self.var_traces = []
         sys.settrace(None)
         return(trace, vartrace, "NameError")
+
+    except ValueError as e :
+        print("ValueError détecté ")
+        trace = self.lines_trace
+        vartrace = self.var_traces
+        self.lines_trace = []
+        self.var_traces = []
+        sys.settrace(None)
+        return(trace, vartrace, "ValueError")
 
 
 

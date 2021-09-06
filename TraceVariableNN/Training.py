@@ -11,7 +11,7 @@ tf.disable_v2_behavior()
 
 from tensorflow.compat.v1.nn import rnn_cell as rnn
 
-num_epochs = 5
+num_epochs = 10
 learning_rate = 0.0001
 n_hidden = 200
 
@@ -26,7 +26,7 @@ class Training:
     classdocs
     '''
 
-    def __init__(self, all_program_symbol_traces, trace_lengths, labels, test_all_program_symbol_traces, test_trace_lengths, test_labels):
+    def __init__(self, all_program_symbol_traces, trace_lengths, labels, test_all_program_symbol_traces, test_trace_lengths, test_labels,    test2_all_program_symbol_traces=None, test2_trace_lengths=None, test2_labels=None):
         '''
         Constructor
         '''
@@ -37,6 +37,10 @@ class Training:
         self.test_all_program_symbol_traces = test_all_program_symbol_traces
         self.test_trace_lengths = test_trace_lengths
         self.test_labels = test_labels
+
+        self.test2_all_program_symbol_traces = test2_all_program_symbol_traces
+        self.test2_trace_lengths = test2_trace_lengths
+        self.test2_labels = test2_labels
 
 
     def train_evaluate(self):
@@ -105,7 +109,11 @@ class Training:
             init = tf.global_variables_initializer()
             sess.run(init)
 
-            list_accuracy = []
+
+            list_loss_iteration = []
+            list_learn_error = []
+            generalization_error_test1 = []
+            generalization_error_test2 = []
             for i in range(num_epochs):
 
                 print(datetime.now()," : Start iteration number ",i)
@@ -114,9 +122,10 @@ class Training:
                 '''
                 AJOUT D'UNE BOUCLE FOR POUR TRAITER PLUSIEURS LOTS
                 '''
+                total_loss = 0
                 nb_lot = len(self.all_program_symbol_traces)
                 for lot in range( nb_lot ) :
-                    print(datetime.now()," : in iteration number ",i," training with lot number ",lot," ( ",lot*100/nb_lot,"% )")
+
                     _,_loss = sess.run(
 
                         [train_step, loss],
@@ -126,9 +135,45 @@ class Training:
                             y : self.labels[lot],
                             seq_lengths : self.trace_lengths[lot],
                         })
+                    print(datetime.now(),":iteration n°",i,"training with lot n°",lot,"loss = ",_loss,"(Process",lot*100/nb_lot,"% )")
+                    total_loss += _loss
 
-                print(datetime.now()," : training iteration is %s and total_loss: %s "%(i,_loss))
+                print(datetime.now(),":training iteration n°",i,"and total_loss:",total_loss/nb_lot)
+                list_loss_iteration.append(total_loss/nb_lot)
 
+                """
+                =============
+                PHASE DE TEST
+                =============
+                """
+
+                """
+                LEARN ERROR
+                """
+                total_accuracy = 0
+                nb_test = 0
+                nb_lot = len(self.all_program_symbol_traces)
+                for lot in range( nb_lot ) :
+                    _accuracy = sess.run(
+
+                        accuracy,
+
+                        feed_dict={
+                                x : self.all_program_symbol_traces[lot],
+                                y : self.labels[lot],
+                                seq_lengths : self.trace_lengths[lot],
+                            })
+                    print(datetime.now(),":Accuracy for training n°",nb_test,"is",_accuracy,"(Test process:",lot*100/nb_lot,"%)")
+                    total_accuracy += _accuracy
+                    nb_test += 1
+
+                list_learn_error.append((1-(total_accuracy/nb_test))*100)
+                print("Total accuracy (training):",total_accuracy*100/nb_test,"%")
+
+
+                """
+                TEST1
+                """
                 total_accuracy = 0
                 nb_test = 0
                 nb_lot = len(self.test_all_program_symbol_traces)
@@ -142,15 +187,53 @@ class Training:
                                 y : self.test_labels[lot],
                                 seq_lengths : self.test_trace_lengths[lot],
                             })
-                    nb_test += 1
-                    print(datetime.now(),"The accuracy for test number ",nb_test," is ",_accuracy," ( Test process : ",lot*100/nb_lot," % ) ")
+                    print(datetime.now(),":Accuracy for test n°",nb_test,"is",_accuracy,"(Test process:",lot*100/nb_lot,"%)")
                     total_accuracy += _accuracy
+                    nb_test += 1
 
-                total_accuracy = total_accuracy*100/nb_test
-                list_accuracy.append(total_accuracy)
-                print("The total accuracy is ",total_accuracy," %")
+                generalization_error_test1.append((1-(total_accuracy/nb_test))*100)
+                print("Total accuracy (test):",total_accuracy*100/nb_test,"%")
+
+                """
+                TEST 2
+                """
+                if self.test2_all_program_symbol_traces != None:
+                    total_accuracy = 0
+                    nb_test = 0
+                    nb_lot = len(self.test2_all_program_symbol_traces)
+                    for lot in range( nb_lot ) :
+                        _accuracy = sess.run(
+
+                            accuracy,
+
+                            feed_dict={
+                                    x : self.test2_all_program_symbol_traces[lot],
+                                    y : self.test2_labels[lot],
+                                    seq_lengths : self.test2_trace_lengths[lot],
+                                })
+                        print(datetime.now(),"Accuracy for test n°",nb_test,":",_accuracy,"(Test process:",lot*100/nb_lot,"%)")
+                        total_accuracy += _accuracy
+                        nb_test += 1
+
+                    generalization_error_test2.append((1-(total_accuracy/nb_test))*100)
+                    print("Total accuracy (test2):",total_accuracy*100/nb_test,"%")
+
 
             print(datetime.now(), " : All iteration over !")
-            print("Accuracy per iteration :")
-            for acc in range(len(list_accuracy)):
-                print("Accuracy in iteration number ",acc," is ",list_accuracy[acc]," %")
+
+            print("Mean Loss per iteration :")
+            for lost in range(len(list_loss_iteration)):
+                print("Mean loss in iteration number ",lost," is ",list_loss_iteration[lost])
+
+            print("Learn Error per iteration :")
+            for mistake in range(len(list_learn_error)):
+                print("Learn Error in iteration number ",mistake," is ",list_learn_error[mistake]," %")
+
+            print("Generalization Error per iteration :")
+            for acc in range(len(generalization_error_test1)):
+                print("Generalization Error in iteration number ",acc," is ",generalization_error_test1[acc]," %")
+
+            if self.test2_all_program_symbol_traces != None:
+                print("Generalization Error per iteration for test 2 :")
+                for acc in range(len(generalization_error_test2)):
+                    print("Generalization Error in iteration number ",acc," is ",generalization_error_test2[acc]," %")

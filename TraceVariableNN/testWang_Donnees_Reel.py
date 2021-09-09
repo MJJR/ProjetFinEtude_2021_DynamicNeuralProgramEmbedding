@@ -15,7 +15,7 @@ print("TEST AVEC DONNES REEL")
 
 print("Ouverture du fichier json")
 #fichier_donnees = open('TracesVariable.json',"r")
-fichier_donnees = open('TracesVariable_exp2_1014.json',"r")
+fichier_donnees = open('TracesVariable_exp2_5690.json',"r")
 print("Chargement du fichier json")
 donnees = json.load(fichier_donnees)
 fichier_donnees.close()
